@@ -23,13 +23,15 @@
 %   PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
 %----------------------------------------------------------------------------------------
 
-\documentclass[10pt]{article} % Default font size and paper size
+\documentclass[12pt]{article} % Default font size and paper size
 
 \usepackage[top=50pt,bottom=100pt,left=50pt,right=50pt]{geometry}
 
 \usepackage{fontspec} % For loading fonts
 \defaultfontfeatures{Mapping=tex-text}
 \setmainfont[SmallCapsFont = Fontin SmallCaps]{Fontin} % Main document font
+%\setmainfont{Helvetica Neue Light}
+
 \usepackage{pythontex}
 
 \usepackage{xunicode,xltxtra,url,parskip} % Formatting packages
@@ -43,6 +45,7 @@
 \usepackage{multirow}
 
 \usepackage{graphicx}
+\usepackage[export]{adjustbox}
 
 \usepackage{titlesec} % Used to customize the \section command
 \titleformat{\section}{\Large\scshape\raggedright}{}{0em}{}[\titlerule] % Text formatting of sections
@@ -61,26 +64,26 @@
 from cv_data import (
                         first_names,
                         last_name,
+                        email,
+                        phone,
+                        facebook,
                         events
                     )
 
 def output_event(event):
-    left_lines = []
-    right_lines = []
-    left_lines.append(r'\textsc{' + event['when'] + r'}')
+    lines = []
+    lines.append(r'\textsc{' + event['when'] + r'}')
+    lines.append(event['role'] + r' at ' + r'\textsc{' + event['where'] + r'}')
+    lines.append('')
+    for topic, info in event['extra_info'].items():
+        lines.append(r'\textbf{%s} %s' % (topic, info))
 
-    right_lines.append(event['role'] + r' at ' + r'\textsc{' + event['where'] + r'}')
-    right_lines.append(r'\footnotesize{' + event['description'] + r'}')
+    print(r'\multirow{%s}{*}[\normalbaselineskip]{\includegraphics[width=2cm]{%s}}' % (len(lines), event['image']), end='')
 
-    total_lines = max(len(left_lines), len(right_lines))
-    for i in range(total_lines):
-        if i < len(left_lines):
-            print(left_lines[i], end='')
+    for i in range(len(lines)):
         print(r'&', end='')
-        if i < len(right_lines):
-            print(right_lines[i], end='')
-        if i + 1 != total_lines:
-            print(r'\\', end='')
+        print(lines[i], end='')
+        print(r'\\', end='')
 
 \end{pycode}
 
@@ -89,33 +92,21 @@ def output_event(event):
 %----------------------------------------------------------------------------------------
 %   NAME AND CONTACT INFORMATION
 %----------------------------------------------------------------------------------------
-\par{\centering{\Huge \py{first_names} \textsc{\py{last_name}}\bigskip\par} % Your name
+\par{\centering{\Huge \py{first_names} \textsc{\py{last_name}} } \par} % Your name
+\par{\centering{
+        \includegraphics[valign=m, width=0.5cm]{email_icon.png} \py{email}
+        \ \includegraphics[valign=m, width=0.5cm]{phone_icon.png} \py{phone}
+        \includegraphics[valign=m, width=0.5cm]{facebook_icon.png} \py{facebook}
 
-
-\section{}
-
-
-
-\begin{tabular}{r|p{11cm}}
-
-\multirow{4}{*}[0.6\normalbaselineskip]{\includegraphics[width=2cm]{mit}} &\textsc{Mar 2012}\\
-& 1\textsuperscript{st} year Analyst at \textsc{Lehman Brothers}, London \\
-& \emph{Commodities Structured Trading}\\
-& \footnotesize{Developed spreadsheets for risk analysis on exotic derivatives on a wide array of commodities (\textit{ags, oils, precious} and \textit{base metals}), managed blotter and secondary trades on structured notes, liaised with Middle Office, Sales and Structuring for bookkeeping.  }\\
-\multicolumn{2}{c}{} \\
-
-%------------------------------------------------
-
-%\textsc{Jul 2010-Oct 2011} & Summer Intern at \textsc{Intech Inc}, Chicago \emph{}\\
-%& \footnotesize{Received pre-placed offer from the Exotics Trading Desk as a result of very positive review. Rated ``\emph{truly distinctive}'' for Analytical Skills and Teamwork.}\\
-\pyc{output_event(events[0])}\\
-\multicolumn{2}{c}{} \\
-
-%------------------------------------------------
-
-\textsc{Jan-Mar 2011} & Computer Technician at \textsc{Buy More}, Burbank \emph{}\\
-& \footnotesize{Worked in the Nerd Herd and helped to solve computer problems by asking customers to turn their computers off and on again.}
-\end{tabular}
+    \bigskip
+} \par}
+\begin{pycode}
+print(r'\begin{tabular}{rp{14cm}}')
+for event in events:
+    output_event(event)
+    print(r'\multicolumn{2}{c}{} \\')
+print(r'\end{tabular}')
+\end{pycode}
 
 
 \end{document}

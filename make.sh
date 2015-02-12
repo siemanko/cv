@@ -1,5 +1,5 @@
 cd build/
-
+rm -rf ./*
 cp ../*.tex ../*.py ./ &&
 cp ../images/* ./ &&
 xelatex cv.tex &&
