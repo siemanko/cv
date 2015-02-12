@@ -1,0 +1,121 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Plasmati Graduate CV
+% LaTeX Template
+% Version 1.0 (24/3/13)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Alessandro Plasmati (alessandro.plasmati@gmail.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+% Important note:
+% This template needs to be compiled with XeLaTeX.
+% The main document font is called Fontin and can be downloaded for free
+% from here: http://www.exljbris.com/fontin.html
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%   PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[10pt]{article} % Default font size and paper size
+
+\usepackage[top=50pt,bottom=100pt,left=50pt,right=50pt]{geometry}
+
+\usepackage{fontspec} % For loading fonts
+\defaultfontfeatures{Mapping=tex-text}
+\setmainfont[SmallCapsFont = Fontin SmallCaps]{Fontin} % Main document font
+\usepackage{pythontex}
+
+\usepackage{xunicode,xltxtra,url,parskip} % Formatting packages
+
+\usepackage[usenames,dvipsnames]{xcolor} % Required for specifying custom colors
+
+\usepackage{hyperref} % Required for adding links   and customizing them
+\definecolor{linkcolour}{rgb}{0,0.2,0.6} % Link color
+\hypersetup{colorlinks,breaklinks,urlcolor=linkcolour,linkcolor=linkcolour} % Set link colors throughout the document
+
+\usepackage{multirow}
+
+\usepackage{graphicx}
+
+\usepackage{titlesec} % Used to customize the \section command
+\titleformat{\section}{\Large\scshape\raggedright}{}{0em}{}[\titlerule] % Text formatting of sections
+\titlespacing{\section}{0pt}{3pt}{3pt} % Spacing around sections
+
+
+
+
+
+\begin{document}
+
+
+
+\pagestyle{empty} % Removes page numbering
+\begin{pycode}
+from cv_data import (
+                        first_names,
+                        last_name,
+                        events
+                    )
+
+def output_event(event):
+    left_lines = []
+    right_lines = []
+    left_lines.append(r'\textsc{' + event['when'] + r'}')
+
+    right_lines.append(event['role'] + r' at ' + r'\textsc{' + event['where'] + r'}')
+    right_lines.append(r'\footnotesize{' + event['description'] + r'}')
+
+    total_lines = max(len(left_lines), len(right_lines))
+    for i in range(total_lines):
+        if i < len(left_lines):
+            print(left_lines[i], end='')
+        print(r'&', end='')
+        if i < len(right_lines):
+            print(right_lines[i], end='')
+        if i + 1 != total_lines:
+            print(r'\\', end='')
+
+\end{pycode}
+
+\font\fb=''[cmr10]'' % Change the font of the \LaTeX command under the skills section
+
+%----------------------------------------------------------------------------------------
+%   NAME AND CONTACT INFORMATION
+%----------------------------------------------------------------------------------------
+\par{\centering{\Huge \py{first_names} \textsc{\py{last_name}}\bigskip\par} % Your name
+
+
+\section{}
+
+
+
+\begin{tabular}{r|p{11cm}}
+
+\multirow{4}{*}[0.6\normalbaselineskip]{\includegraphics[width=2cm]{mit}} &\textsc{Mar 2012}\\
+& 1\textsuperscript{st} year Analyst at \textsc{Lehman Brothers}, London \\
+& \emph{Commodities Structured Trading}\\
+& \footnotesize{Developed spreadsheets for risk analysis on exotic derivatives on a wide array of commodities (\textit{ags, oils, precious} and \textit{base metals}), managed blotter and secondary trades on structured notes, liaised with Middle Office, Sales and Structuring for bookkeeping.  }\\
+\multicolumn{2}{c}{} \\
+
+%------------------------------------------------
+
+%\textsc{Jul 2010-Oct 2011} & Summer Intern at \textsc{Intech Inc}, Chicago \emph{}\\
+%& \footnotesize{Received pre-placed offer from the Exotics Trading Desk as a result of very positive review. Rated ``\emph{truly distinctive}'' for Analytical Skills and Teamwork.}\\
+\pyc{output_event(events[0])}\\
+\multicolumn{2}{c}{} \\
+
+%------------------------------------------------
+
+\textsc{Jan-Mar 2011} & Computer Technician at \textsc{Buy More}, Burbank \emph{}\\
+& \footnotesize{Worked in the Nerd Herd and helped to solve computer problems by asking customers to turn their computers off and on again.}
+\end{tabular}
+
+
+\end{document}
