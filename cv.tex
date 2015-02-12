@@ -29,8 +29,8 @@
 
 \usepackage{fontspec} % For loading fonts
 \defaultfontfeatures{Mapping=tex-text}
-%\setmainfont[SmallCapsFont = Fontin SmallCaps]{Fontin} % Main document font
-\setmainfont{Helvetica Neue Light}
+\setmainfont[SmallCapsFont = Fontin SmallCaps]{Fontin} % Main document font
+%\setmainfont{Helvetica Neue Light}
 
 \usepackage{pythontex}
 
@@ -43,6 +43,8 @@
 \hypersetup{colorlinks,breaklinks,urlcolor=linkcolour,linkcolor=linkcolour} % Set link colors throughout the document
 
 \usepackage{multirow}
+
+\usepackage{enumitem}
 
 \usepackage{graphicx}
 \usepackage[export]{adjustbox}
@@ -67,18 +69,32 @@ from cv_data import (
                         email,
                         phone,
                         facebook,
-                        events
+                        events,
+                        table_multicell
                     )
 
 def output_event(event):
     lines = []
-    lines.append(r'\textsc{' + event['when'] + r'}')
-    lines.append(event['role'] + r' at ' + r'\textsc{' + event['where'] + r'}')
-    lines.append('')
-    for topic, info in event['extra_info'].items():
-        lines.append(r'\textbf{%s} %s' % (topic, info))
+    when_line = r'\textsc{' + event['when'] + r'}'
+    title_line = event['role'] + r' at ' + r'\textsc{' + event['where'] + r'}'
+    lines.append(title_line)
+    lines.append(when_line)
 
-    print(r'\multirow{%s}{*}[\normalbaselineskip]{\includegraphics[width=2cm]{%s}}' % (len(lines), event['image']), end='')
+    if r'courses' in event:
+        lines.append(r'\textbf{Courses} ' + r' $\bullet$ '.join(event['courses']))
+    if r'projects' in event:
+        line = [r'\textbf{Selected projects}', r'\begin{description}[labelindent=1cm, nosep, after*=\vspace{-\baselineskip}]']
+        for title, description in event['projects'].items():
+            line.append(r'\item[%s] %s' % (title, description))
+        line.append(r'\end{description}')
+        lines.append('\n'.join(line))
+    if r'extra_info' in event:
+        for topic, info in event['extra_info'].items():
+            lines.append(r'\textbf{%s} %s' % (topic, info))
+    if r'description' in event:
+        lines.append(r'\footnotesize{' + event[r'description'] + r'}')
+
+    print(r'\multirow{%s}{*}[2.1\normalbaselineskip]{\includegraphics[width=2cm]{%s}}' % (len(lines), event['image']), end='')
 
     for i in range(len(lines)):
         print(r'&', end='')
@@ -100,6 +116,9 @@ def output_event(event):
 
     \bigskip
 } \par}
+
+
+\renewcommand{\arraystretch}{1.5}
 \begin{pycode}
 print(r'\begin{tabular}{rp{14cm}}')
 for event in events:

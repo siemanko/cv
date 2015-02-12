@@ -20,11 +20,24 @@ mit = {
         'Integer Optimization (A)',
         'Computer and Network Security (A)',
     ],
+    'projects': {
+        'Android LOl' : 'Lol Lol Lol Lol Lol Lol Lol Lol Lol Lol ',
+        'Lol Lol': 'Lol Lol Lol Lol Lol Lol Lol Lol Lol Lol Lol Lol ',
+    },
     'extra_info': {
         'Research Interests': 'My research concerns applying machine learning techniques for Dialog Systems (think Siri solving more complex problems like planning your day). My academic adviser is Brian Williams.',
         'Research Assistantship': 'My PhD is sponsored by TATA Center at MIT. Part of my research involves traveling to rural areas in India and deploying my algorithms on village scale power microgrid.',
     },
 }
+
+dropbox = {
+    'when': 'Fall 2013',
+    'role': 'Software Engineering Intern',
+    'where': 'Dropbox',
+    'image' : 'dropbox.png',
+    'description': 'Together with The King of YOLO (aka Andrew Drake) we implemented early ver-sion of Livefill 2.0 (Dropbox’s version of Twitter Storm). My biggest achievement was designing and implementing real-time reserialization of traffic (Twitter stormguys approve: "we did not implement it because shit seemed hard"). There were also countless little features that were included - automatically created statistics,quick and simple adding of new handlers, automated failure recovery, message aggregation, Redis based queuing system, separation of traffic into scopes and ofcourse porting all the traffic from old system to new system. By the time I left all of Dropbox was running it and we had large portion of users shadowed.'
+}
+
 
 cambridge = {
     'when': r'Jul 2010-Oct 2011',
@@ -34,7 +47,7 @@ cambridge = {
     'extra_info' : {}
 }
 
-events = [mit, cambridge]
+events = [mit, dropbox]
 
 # DON'T EDIT BELOW THIS LINE
 first_names = ' '.join(name.split(' ')[:-1])
