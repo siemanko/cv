@@ -7,7 +7,7 @@ name='Szymon SIDOR'
 
 email='szymon.sidor@gmail.com'
 phone='+14438799664'
-facebook=r'\url{fb.com/szymon.sidor}'
+facebook=r'fb.com/szymon.sidor'
 
 mit = {
     'fixup': str(3.0),
@@ -70,15 +70,25 @@ google1 = {
 }
 
 cambridge = {
-    'when': r'Jul 2010-Oct 2011',
-    'where': r'Intech Inc',
-    'role': r'Summer Intern',
-    'image': 'mit.png',
-    'extra_info' : {}
+    'fixup': str(0.0),
+    'when': r'October 2010 - June 2013',
+    'where': r'University of Cambridge',
+    'role': r'Computer Science Tripos',
+    'image': 'cambridge.png',
+    'courses': [
+        'Siema',
+        'Siema',
+        'Siema',
+        'Siema',
+
+    ]
 }
 
-events = [mit, dropbox, google2, google1]
+events = [mit, dropbox, google2, google1, cambridge]
 
 # DON'T EDIT BELOW THIS LINE
 first_names = ' '.join(name.split(' ')[:-1])
 last_name = name.split(' ')[-1].upper()
+
+href_email = r'\href{mailto:%s}{%s}' % (email, email)
+href_facebook = r'\url{%s}' % (facebook,)

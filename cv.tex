@@ -29,18 +29,20 @@
 
 \usepackage{fontspec} % For loading fonts
 \defaultfontfeatures{Mapping=tex-text}
-\setmainfont[SmallCapsFont = Fontin SmallCaps]{Fontin} % Main document font
+%\setmainfont[SmallCapsFont = Fontin SmallCaps]{Fontin} % Main document font
 %\setmainfont{Helvetica Neue Light}
+%\setmainfont[BoldFont = Roboto Medium, SmallCapsFont=Roboto]{Roboto}
+\setmainfont[BoldFont = Roboto, SmallCapsFont=Roboto Thin]{Roboto Thin}
 
 \usepackage{pythontex}
 
-\usepackage{xunicode,xltxtra,url,parskip} % Formatting packages
+\usepackage{xunicode,xltxtra,parskip} % Formatting packages
 
 \usepackage[usenames,dvipsnames]{xcolor} % Required for specifying custom colors
 
-\usepackage{hyperref} % Required for adding links   and customizing them
-\definecolor{linkcolour}{rgb}{0,0.2,0.6} % Link color
-\hypersetup{colorlinks,breaklinks,urlcolor=linkcolour,linkcolor=linkcolour} % Set link colors throughout the document
+\usepackage[hidelinks]{hyperref} % Required for adding links   and customizing them
+%\definecolor{linkcolour}{rgb}{0,0.2,0.6} % Link color
+%\hypersetup{colorlinks,breaklinks,urlcolor=linkcolour,linkcolor=linkcolour} % Set link colors throughout the document
 
 \usepackage{multirow}
 
@@ -49,6 +51,8 @@
 \usepackage{graphicx}
 \usepackage[export]{adjustbox}
 
+\usepackage{hyperref}
+
 \usepackage{longtable}
 
 \usepackage{titlesec} % Used to customize the \section command
@@ -56,7 +60,8 @@
 \titlespacing{\section}{0pt}{3pt}{3pt} % Spacing around sections
 
 
-
+\def\UrlFont{\itshape\rmfamily}
+\def\HrefFont{\itshape\rmfamily}
 
 
 \begin{document}
@@ -68,17 +73,16 @@
 from cv_data import (
                         first_names,
                         last_name,
-                        email,
+                        href_email,
                         phone,
-                        facebook,
+                        href_facebook,
                         events,
-                        table_multicell
                     )
 
 def output_event(event):
     lines = []
     when_line = r'\textsc{' + event['when'] + r'}'
-    title_line = event['role'] + r' at ' + r'\textsc{' + event['where'] + r'}'
+    title_line = r'\textbf{%s at %s}' % (event['role'], event['where'])
     lines.append(title_line)
     lines.append(when_line)
 
@@ -105,17 +109,15 @@ def output_event(event):
 
 \end{pycode}
 
-\font\fb=''[cmr10]'' % Change the font of the \LaTeX command under the skills section
-
 %----------------------------------------------------------------------------------------
 %   NAME AND CONTACT INFORMATION
 %----------------------------------------------------------------------------------------
-\par{\centering{\Huge \py{first_names} \textsc{\py{last_name}} } \par} % Your name
+\par{\centering{\Huge \bf \py{first_names} \py{last_name} } \par} % Your name
 \par{\centering{
         \begin{tabular}{llllll}
-        \includegraphics[valign=m, width=0.5cm]{email_icon.png} &\py{email}&
-        \ \includegraphics[valign=m, width=0.5cm]{phone_icon.png} &\py{phone}&
-        \includegraphics[valign=m, width=0.5cm]{facebook_icon.png} &\py{facebook}
+        \includegraphics[valign=m, width=0.5cm]{email_icon.png} \py{href_email}
+        \ \includegraphics[valign=m, width=0.5cm]{phone_icon.png} \py{phone}&
+        \includegraphics[valign=m, width=0.5cm]{facebook_icon.png} \py{href_facebook}
         \end{tabular}
     \bigskip
 } \par}
