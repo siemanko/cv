@@ -82,11 +82,3 @@ events = [mit, dropbox, google2, google1]
 # DON'T EDIT BELOW THIS LINE
 first_names = ' '.join(name.split(' ')[:-1])
 last_name = name.split(' ')[-1].upper()
-
-def table_multicell(items, align='r'):
-    res = [r'\begin{tabular}{@{}%s@{}}' % (align,)]
-    for i, item in enumerate(items):
-        res.append('%s%s' % (item, r'' if i + 1 == len(items) else r'\\'))
-    res.append(r'\end{tabular}')
-    return ''.join(res)
-
