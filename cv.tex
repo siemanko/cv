@@ -49,6 +49,8 @@
 \usepackage{graphicx}
 \usepackage[export]{adjustbox}
 
+\usepackage{longtable}
+
 \usepackage{titlesec} % Used to customize the \section command
 \titleformat{\section}{\Large\scshape\raggedright}{}{0em}{}[\titlerule] % Text formatting of sections
 \titlespacing{\section}{0pt}{3pt}{3pt} % Spacing around sections
@@ -83,18 +85,18 @@ def output_event(event):
     if r'courses' in event:
         lines.append(r'\textbf{Courses} ' + r' $\bullet$ '.join(event['courses']))
     if r'projects' in event:
-        line = [r'\textbf{Selected projects}', r'\begin{description}[labelindent=1cm, nosep, after*=\vspace{-\baselineskip}]']
+        line = [r'\textbf{Selected projects}', r'\begin{description}[labelindent=1cm,  after*=\vspace{-\baselineskip}]']
         for title, description in event['projects'].items():
-            line.append(r'\item[%s] %s' % (title, description))
+            line.append(r'\item[%s] \footnotesize{ %s }' % (title, description))
         line.append(r'\end{description}')
         lines.append('\n'.join(line))
     if r'extra_info' in event:
         for topic, info in event['extra_info'].items():
-            lines.append(r'\textbf{%s} %s' % (topic, info))
+            lines.append(r'\textbf{%s} \footnotesize{%s}' % (topic, info))
     if r'description' in event:
         lines.append(r'\footnotesize{' + event[r'description'] + r'}')
 
-    print(r'\multirow{%s}{*}[2.1\normalbaselineskip]{\includegraphics[width=2cm]{%s}}' % (len(lines), event['image']), end='')
+    print(r'\multirow{%s}{*}[%s\normalbaselineskip]{\includegraphics[width=2cm]{%s}}' % (len(lines), event['fixup'], event['image']), end='')
 
     for i in range(len(lines)):
         print(r'&', end='')
@@ -110,21 +112,22 @@ def output_event(event):
 %----------------------------------------------------------------------------------------
 \par{\centering{\Huge \py{first_names} \textsc{\py{last_name}} } \par} % Your name
 \par{\centering{
-        \includegraphics[valign=m, width=0.5cm]{email_icon.png} \py{email}
-        \ \includegraphics[valign=m, width=0.5cm]{phone_icon.png} \py{phone}
-        \includegraphics[valign=m, width=0.5cm]{facebook_icon.png} \py{facebook}
-
+        \begin{tabular}{llllll}
+        \includegraphics[valign=m, width=0.5cm]{email_icon.png} &\py{email}&
+        \ \includegraphics[valign=m, width=0.5cm]{phone_icon.png} &\py{phone}&
+        \includegraphics[valign=m, width=0.5cm]{facebook_icon.png} &\py{facebook}
+        \end{tabular}
     \bigskip
 } \par}
 
 
 \renewcommand{\arraystretch}{1.5}
 \begin{pycode}
-print(r'\begin{tabular}{rp{14cm}}')
+print(r'\begin{longtable}{rp{14cm}}')
 for event in events:
     output_event(event)
     print(r'\multicolumn{2}{c}{} \\')
-print(r'\end{tabular}')
+print(r'\end{longtable}')
 \end{pycode}
 
 
