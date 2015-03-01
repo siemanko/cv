@@ -25,7 +25,7 @@
 
 \documentclass[12pt]{article} % Default font size and paper size
 
-\usepackage[top=50pt,bottom=100pt,left=50pt,right=50pt]{geometry}
+\usepackage[top=70pt,bottom=110pt,left=60pt,right=60pt]{geometry}
 
 \usepackage{fontspec} % For loading fonts
 \defaultfontfeatures{Mapping=tex-text}
@@ -86,19 +86,20 @@ def output_event(event):
     lines.append(title_line)
     lines.append(when_line)
 
-    if r'courses' in event:
-        lines.append(r'\textbf{Courses} ' + r' $\bullet$ '.join(event['courses']))
-    if r'projects' in event:
-        line = [r'\textbf{Selected projects}', r'\begin{description}[labelindent=1cm,  after*=\vspace{-\baselineskip}]']
-        for title, description in event['projects'].items():
-            line.append(r'\item[%s] \footnotesize{ %s }' % (title, description))
-        line.append(r'\end{description}')
-        lines.append('\n'.join(line))
     if r'extra_info' in event:
         for topic, info in event['extra_info'].items():
             lines.append(r'\textbf{%s} \footnotesize{%s}' % (topic, info))
     if r'description' in event:
         lines.append(r'\footnotesize{' + event[r'description'] + r'}')
+
+    if r'projects' in event:
+        lines.append(r'\textbf{Selected projects}')
+        for title, description in event['projects'].items():
+            lines.append(r'\hangafter=0 \hangindent=1cm  \textbf{%s} \footnotesize{%s}' % (title, description))
+    if r'courses' in event:
+        lines.append(r'\textbf{Courses} \footnotesize{%s}' % r' $\triangleright$ '.join(['']+event['courses']))
+    if r'competitions' in event:
+        lines.append(r'\textbf{Competitions} \footnotesize{%s}' % r' $\triangleright$ '.join(['']+event['competitions']))
 
     print(r'\multirow{%s}{*}[%s\normalbaselineskip]{\includegraphics[width=2cm]{%s}}' % (len(lines), event['fixup'], event['image']), end='')
 
@@ -123,7 +124,7 @@ def output_event(event):
 } \par}
 
 
-\renewcommand{\arraystretch}{1.5}
+\renewcommand{\arraystretch}{1.25}
 \begin{pycode}
 print(r'\begin{longtable}{rp{14cm}}')
 for event in events:
