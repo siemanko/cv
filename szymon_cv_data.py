@@ -10,7 +10,7 @@ phone='+14438799664'
 facebook=r'fb.com/szymon.sidor'
 
 mit = {
-    'fixup': str(3.5),
+    'fixup': str(4.0),
     'when': r'January 2014 - Current',
     'where': r'Massachusetts Institute of Technology',
     'role': r'Computer Science PhD',
@@ -24,6 +24,7 @@ mit = {
     'projects': {
         r'Android Security' : r'Covert video capture. Demo available at \url{https://www.youtube.com/watch?v=sDzs6y4JVok}.',
         r'Policy search and unknown dynamics': r"Implementation of Sergey Levine's work which uses GMMs and linear approximation to estimate robot dynamics using small number of runs of the hardware. It uses estimated dynamics to optimize goal function for black box policy (in my case RNN). Report available online \url{https://www.dropbox.com/s/1e4hm4eidztvxu6/6.867-project.pdf?dl=0}.",
+        r'Dali' : r'Coauthored deep learning/symbolic differentiation system written in C++. Hogwild enabled. Demonstrated capability to learn simple language models, improved on facebook Toy AI problems LSTM baseline and more. Work in progress. \url{https://github.com/jonathanraiman/recurrentjs}'
     },
     'extra_info': {
         'Research Interests': 'My research concerns applying machine learning techniques for Dialog Systems (e.g. Siri-style assistant solving complex problems like planning your day). Specifically I am interested in text generation using modern machine learning techniques (RNNs, NTMs etc.). My academic adviser is Brian Williams.',
